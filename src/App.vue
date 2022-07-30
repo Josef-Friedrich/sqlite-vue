@@ -6,6 +6,10 @@ import initSqlJs from 'sql.js'
 </script>
 
 <script lang="ts">
+async function fetchSqlFile (url: string): Promise<string> {
+  return await (await fetch(url)).text()
+}
+
 export default {
   async mounted () {
     const SQL = await initSqlJs({
@@ -16,6 +20,12 @@ export default {
       locateFile: file => `https://sql.js.org/dist/${file}`
     })
     const db = new SQL.Database()
+
+    // const sqlDump = await fetchSqlFile(
+    //   ''
+    // )
+    // console.log(sqlDump)
+    // db.run(sqlDump)
 
     // Run a query without reading the results
     db.run(`CREATE TABLE "Mond" (
@@ -33,14 +43,13 @@ export default {
     )
 
     // Prepare a statement
-    const stmt = db.prepare(
-      'SELECT * FROM Mond'
-    )
+    const stmt = db.prepare('SELECT * FROM Mond')
 
     // Bind new values
     // stmt.bind({ $start: 1, $end: 2 })
     const rows = []
     while (stmt.step()) {
+      console.log(stmt.getSQL())
       //
       rows.push(stmt.get())
       const row = stmt.getAsObject()
