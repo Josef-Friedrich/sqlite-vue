@@ -4,7 +4,7 @@ import ResultTable from '@/components/ResultTable.vue'
 import MonacoEditor from '@/components/MonacoEditor.vue'
 import { useTableStore } from '@/stores/table'
 import { onMounted } from 'vue'
-import { initializeDb, importAllTables } from '@/sql'
+import { initializeDb, importAllTables, execSql } from '@/sql'
 import type { editor } from 'monaco-editor'
 import type * as Monaco from 'monaco-editor'
 
@@ -29,8 +29,7 @@ function onValueChange (
   value: string,
   event: editor.IModelContentChangedEvent
 ) {
-  console.log(value)
-  console.log(event)
+  execSql(value)
 }
 </script>
 

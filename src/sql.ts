@@ -1,9 +1,12 @@
 import initSqlJs from 'sql.js'
 import { useTableStore } from '@/stores/table'
+import type { Row } from '@/stores/table'
 
 async function fetchDumpFile (url: string): Promise<string> {
   return await (await fetch(url)).text()
 }
+
+
 
 const SQL = await initSqlJs({
   // Required to load the wasm binary asynchronously. Of course, you can host it wherever you want
@@ -27,15 +30,26 @@ export function importTable (name: string) {
 
   const columns = statement.getColumnNames()
 
-  const rows = []
+  const rows: Row[] = []
   while (statement.step()) {
     rows.push(statement.get())
   }
   store.add(name, columns, rows)
 }
 
+export function execSql (sql: string) {
+  try {
+    const result = db.exec(sql)
+    console.log(result)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export function importAllTables () {
-  const result = db.exec('SELECT name from sqlite_schema WHERE type ="table" AND name NOT LIKE "sqlite_%"')
+  const result = db.exec(
+    'SELECT name from sqlite_schema WHERE type ="table" AND name NOT LIKE "sqlite_%"'
+  )
   for (const name of result[0].values) {
     importTable(name[0] as string)
   }
