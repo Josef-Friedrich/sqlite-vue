@@ -36,7 +36,7 @@ export function importTable (name: string) {
 
 export function importAllTables () {
   const result = db.exec('SELECT name from sqlite_schema WHERE type ="table" AND name NOT LIKE "sqlite_%"')
-  for (const name of result[0].values[0]) {
-    importTable(name as string)
+  for (const name of result[0].values) {
+    importTable(name[0] as string)
   }
 }

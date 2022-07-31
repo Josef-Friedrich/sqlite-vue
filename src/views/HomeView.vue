@@ -8,7 +8,7 @@ const store = useTableStore()
 
 onMounted(async () => {
   await initializeDb(
-    'https://raw.githubusercontent.com/bschlangaul-sammlung/datenbanken/main/mond.sql'
+    'https://raw.githubusercontent.com/bschlangaul-sammlung/datenbanken/main/buses.sql'
   )
   importAllTables()
 })
