@@ -1,22 +1,30 @@
-<script lang="ts">
-export default {
-  props: {
-    tableName: String,
-    columnNames: Array,
-    rows: Array
-  }
+<script setup lang="ts">
+import type { Table } from '../stores/table'
+interface Props {
+  table: Table
 }
+
+const props = defineProps<Props>()
 </script>
 
 <template>
   <section>
-    {{ tableName }}
-    <table>
-      <tr v-for="row in rows" :key="row[0]">
-        <td v-for="cell in row" :key="cell">
-          {{ cell }}
-        </td>
-      </tr>
+    {{ table.name }}
+    <table class="pure-table pure-table-bordered pure-table-striped">
+      <thead>
+        <tr>
+          <th v-for="(name, id) in table.columns" :key="id">
+            {{ name }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(row, id) in table.rows" :key="id">
+          <td v-for="(cell, id) in row" :key="id">
+            {{ cell }}
+          </td>
+        </tr>
+      </tbody>
     </table>
   </section>
 </template>
