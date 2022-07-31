@@ -2,12 +2,15 @@
 import ResultTable from '@/components/ResultTable.vue'
 import { useTableStore } from '@/stores/table'
 import { onMounted } from 'vue'
+import { initializeDb, importAllTables } from '@/sql'
 
 const store = useTableStore()
 
-onMounted(() => {
-  store.add('test', ['a', 'b'], [[1, 2], [3, 4]])
-  store.add('test', ['a', 'b'], [[1, 2], [3, 4]])
+onMounted(async () => {
+  await initializeDb(
+    'https://raw.githubusercontent.com/bschlangaul-sammlung/datenbanken/main/mond.sql'
+  )
+  importAllTables()
 })
 </script>
 
@@ -15,8 +18,6 @@ onMounted(() => {
   <main>
     Home
 
-    <result-table v-for="table in store.tables"
-      :table="table"
-    ></result-table>
+    <result-table v-for="table in store.tables" :table="table"></result-table>
   </main>
 </template>
