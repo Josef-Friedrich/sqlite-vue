@@ -1,7 +1,5 @@
 # SQLöwe
 
-
-
 ## SQL in the browser
 
 * https://github.com/sqlpad/sqlpad
