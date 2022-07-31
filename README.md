@@ -1,5 +1,12 @@
 # sql
 
+
+## SQL in the browser
+
+* https://github.com/sqlpad/sqlpad
+* https://sqlime.org
+* https://github.com/zzzprojects/sqlfiddle2
+
 ## Project Setup
 
 ```sh
