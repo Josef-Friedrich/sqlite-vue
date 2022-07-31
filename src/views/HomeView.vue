@@ -1,9 +1,12 @@
 <script lang="ts" setup>
 import ResultTable from '@/components/ResultTable.vue'
-import MonacoEditor from 'monaco-editor-vue3'
+// import MonacoEditor from 'monaco-editor-vue3'
+import MonacoEditor from '@/components/MonacoEditor.vue'
 import { useTableStore } from '@/stores/table'
 import { onMounted } from 'vue'
 import { initializeDb, importAllTables } from '@/sql'
+import type { editor } from 'monaco-editor'
+import type * as Monaco from 'monaco-editor'
 
 const store = useTableStore()
 
@@ -13,6 +16,22 @@ onMounted(async () => {
   )
   importAllTables()
 })
+
+function onEditorWillMount(editor: editor.ICodeEditor) {
+  console.log(editor)
+}
+
+function onEditorDidMount(monaco: typeof Monaco) {
+  console.log(monaco)
+}
+
+function onValueChange (
+  value: string,
+  event: editor.IModelContentChangedEvent
+) {
+  console.log(value)
+  console.log(event)
+}
 </script>
 
 <template>
@@ -22,11 +41,13 @@ onMounted(async () => {
     <!-- https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneEditorConstructionOptions.html -->
     <MonacoEditor
       class="editor"
-      v-model="code"
       :options="{ fontSize: 40, lineNumbers: 'off' }"
       width="800"
       height="300"
       language="sql"
+      @change="onValueChange"
+      @editorDidMount="onEditorDidMount"
+      @editorWillMount="onEditorWillMount"
     />
     <result-table v-for="table in store.tables" :table="table"></result-table>
   </main>
