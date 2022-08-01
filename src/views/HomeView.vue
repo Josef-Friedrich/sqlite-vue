@@ -18,11 +18,9 @@ onMounted(async () => {
 })
 
 function onEditorWillMount(editor: editor.ICodeEditor) {
-  console.log(editor)
 }
 
 function onEditorDidMount(monaco: typeof Monaco) {
-  console.log(monaco)
 }
 
 function onValueChange (
@@ -40,7 +38,7 @@ function onValueChange (
     <!-- https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneEditorConstructionOptions.html -->
     <MonacoEditor
       class="editor"
-      :options="{ fontSize: 40, lineNumbers: 'off' }"
+      :options="{ fontSize: 26, lineNumbers: 'off' }"
       width="800"
       height="300"
       language="sql"
@@ -50,7 +48,7 @@ function onValueChange (
     />
 
     <div v-if="store.errorMsg">{{ store.errorMsg }}</div>
-    <result-table v-for="table in store.tables" :table="table"></result-table>
+    <result-table v-if="store.result" :table="store.result"></result-table>
   </main>
 </template>
 

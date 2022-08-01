@@ -39,10 +39,8 @@ export function execSql (sql: string) {
   const store = useTableStore()
   try {
     const result = db.exec(sql)[0]
-    console.log(result)
     store.setResult(result.columns, result.values)
   } catch (e) {
-    console.log(e)
     const error: Error = e as Error
     store.setError(error.message)
   }
