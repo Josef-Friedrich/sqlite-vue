@@ -27,6 +27,9 @@ export const useTableStore = defineStore('table', {
   getters: {
     table: state => {
       return (name: string) => state.tables[name]
+    },
+    hasDatabase: (state): boolean => {
+      return Object.keys(state.tables).length > 0
     }
   },
   actions: {

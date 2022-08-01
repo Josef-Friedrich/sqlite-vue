@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import ResultTable from '@/components/ResultTable.vue'
-
+import UrlOpener from '@/components/UrlOpener.vue'
 import { useTableStore } from '@/stores/table'
 
 const store = useTableStore()
@@ -8,6 +8,7 @@ const store = useTableStore()
 
 <template>
   <main>
+    <url-opener></url-opener>
     <result-table
       v-for="table in store.tables"
       :table="table"

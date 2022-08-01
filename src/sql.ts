@@ -16,25 +16,6 @@ const SQL = await initSqlJs({
 
 let db = new SQL.Database()
 
-export async function initializeDb (url: string) {
-  db = new SQL.Database()
-  const dump = await fetchDumpFile(url)
-  db.run(dump)
-}
-
-export function importTable (name: string) {
-  const store = useTableStore()
-  const statement = db.prepare('SELECT * FROM ' + name)
-
-  const columns = statement.getColumnNames()
-
-  const rows: Row[] = []
-  while (statement.step()) {
-    rows.push(statement.get())
-  }
-  store.add(name, columns, rows)
-}
-
 export function execSql (sql: string) {
   const store = useTableStore()
   try {
@@ -46,11 +27,36 @@ export function execSql (sql: string) {
   }
 }
 
-export function importAllTables () {
+function importTable (name: string) {
+  const store = useTableStore()
+
+  const statement = db.prepare('SELECT * FROM ' + name)
+
+  const columns = statement.getColumnNames()
+
+  const rows: Row[] = []
+  while (statement.step()) {
+    rows.push(statement.get())
+  }
+  store.add(name, columns, rows)
+}
+
+function importAllTables () {
   const result = db.exec(
-    'SELECT name from sqlite_schema WHERE type ="table" AND name NOT LIKE "sqlite_%"'
+    'SELECT name from sqlite_schema WHERE type = "table" AND name NOT LIKE "sqlite_%"'
   )
   for (const name of result[0].values) {
     importTable(name[0] as string)
   }
+}
+
+export async function openDb (url: string) {
+  const store = useTableStore()
+  store.$reset()
+
+  db = new SQL.Database()
+  const dump = await fetchDumpFile(url)
+  db.run(dump)
+
+  importAllTables()
 }

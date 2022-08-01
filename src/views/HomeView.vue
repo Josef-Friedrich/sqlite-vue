@@ -1,27 +1,27 @@
+openDb
 <script lang="ts" setup>
 import ResultTable from '@/components/ResultTable.vue'
 // import MonacoEditor from 'monaco-editor-vue3'
 import MonacoEditor from '@/components/MonacoEditor.vue'
 import { useTableStore } from '@/stores/table'
 import { onMounted } from 'vue'
-import { initializeDb, importAllTables, execSql } from '@/sql'
+import { openDb, execSql } from '@/sql'
 import type { editor } from 'monaco-editor'
 import type * as Monaco from 'monaco-editor'
 
 const store = useTableStore()
 
 onMounted(async () => {
-  await initializeDb(
-    'https://raw.githubusercontent.com/bschlangaul-sammlung/datenbanken/main/buses.sql'
-  )
-  importAllTables()
+  if (!store.hasDatabase) {
+    await openDb(
+      'https://raw.githubusercontent.com/bschlangaul-sammlung/datenbanken/main/sqlzoo/buses.sql'
+    )
+  }
 })
 
-function onEditorWillMount(editor: editor.ICodeEditor) {
-}
+function onEditorWillMount (editor: editor.ICodeEditor) {}
 
-function onEditorDidMount(monaco: typeof Monaco) {
-}
+function onEditorDidMount (monaco: typeof Monaco) {}
 
 function onValueChange (
   value: string,
