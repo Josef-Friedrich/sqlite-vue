@@ -4,30 +4,14 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
   <header>
-    <div class="wrapper">
-      <nav class="UnderlineNav">
-        <div class="UnderlineNav-body" role="tablist">
-          <RouterLink class="UnderlineNav-item" role="tab" type="button" to="/"
-            >Home</RouterLink
-          >
-          <RouterLink
-            class="UnderlineNav-item"
-            role="tab"
-            type="button"
-            to="/database"
-            >Database</RouterLink
-          >
-          <RouterLink
-            class="UnderlineNav-item"
-            role="tab"
-            type="button"
-            to="/about"
-            >About</RouterLink
-          >
-        </div>
-      </nav>
-    </div>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-start">
+        <RouterLink class="navbar-item" to="/">Home</RouterLink>
+        <RouterLink class="navbar-item" to="/database">Database</RouterLink>
+        <RouterLink class="navbar-item" to="/about">About</RouterLink>
+      </div>
+    </nav>
   </header>
 
-  <RouterView />
+  <RouterView class="container" />
 </template>

@@ -8,9 +8,10 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <section>
-    {{ table.name }}
-    <table class="pure-table pure-table-bordered pure-table-striped">
+  <section class="content">
+    <h2>{{ table.name }}</h2>
+
+    <table class="table is-striped is-bordered is-hoverable is-narrow">
       <thead>
         <tr>
           <th v-for="(name, id) in table.columns" :key="id">
