@@ -12,7 +12,7 @@ export interface Table {
 
 interface State {
   tables: { [name: string]: Table }
-  result: Table
+  result: Table | null
   errorMsg: string | null
 }
 
@@ -20,22 +20,13 @@ export const useTableStore = defineStore('table', {
   state: (): State => {
     return {
       tables: {},
-      result: {
-        name: 'Result',
-        columns: [],
-        rows: []
-      },
+      result: null,
       errorMsg: null
     }
   },
   getters: {
     table: state => {
       return (name: string) => state.tables[name]
-    },
-    result: (state): Table | undefined => {
-      if (state.result?.rows?.length > 0) {
-        return state.result
-      }
     }
   },
   actions: {
@@ -48,11 +39,11 @@ export const useTableStore = defineStore('table', {
     },
     setResult (columns: string[], rows: Row[]) {
       this.errorMsg = null
-      this.result.columns = columns
-      this.result.rows = rows
+      this.result = { name: 'Result', columns, rows }
     },
-    setError(msg: string) {
+    setError (msg: string) {
       this.errorMsg = msg
+      this.result = null
     }
   }
 })
