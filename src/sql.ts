@@ -6,8 +6,6 @@ async function fetchDumpFile (url: string): Promise<string> {
   return await (await fetch(url)).text()
 }
 
-
-
 const SQL = await initSqlJs({
   // Required to load the wasm binary asynchronously. Of course, you can host it wherever you want
   // You can omit locateFile completely when running in node
@@ -38,11 +36,14 @@ export function importTable (name: string) {
 }
 
 export function execSql (sql: string) {
+  const store = useTableStore()
   try {
-    const result = db.exec(sql)
-    console.log(result)
-  } catch (error) {
-    console.log(error)
+    const result = db.exec(sql)[0]
+    store.setResult(result.columns, result.values)
+  } catch (e) {
+    console.log(e)
+    const error: Error = e as Error
+    store.setError(error.message)
   }
 }
 

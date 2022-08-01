@@ -48,6 +48,8 @@ function onValueChange (
       @editorDidMount="onEditorDidMount"
       @editorWillMount="onEditorWillMount"
     />
+
+    <div v-if="store.errorMsg">{{ store.errorMsg }}</div>
     <result-table v-for="table in store.tables" :table="table"></result-table>
   </main>
 </template>

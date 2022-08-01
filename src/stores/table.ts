@@ -13,6 +13,7 @@ export interface Table {
 interface State {
   tables: { [name: string]: Table }
   result: Table
+  errorMsg: string | null
 }
 
 export const useTableStore = defineStore('table', {
@@ -23,7 +24,8 @@ export const useTableStore = defineStore('table', {
         name: 'Result',
         columns: [],
         rows: []
-      }
+      },
+      errorMsg: null
     }
   },
   getters: {
@@ -31,7 +33,7 @@ export const useTableStore = defineStore('table', {
       return (name: string) => state.tables[name]
     },
     result: (state): Table | undefined => {
-      if (state.result.rows.length > 0) {
+      if (state.result?.rows?.length > 0) {
         return state.result
       }
     }
@@ -45,8 +47,12 @@ export const useTableStore = defineStore('table', {
       }
     },
     setResult (columns: string[], rows: Row[]) {
+      this.errorMsg = null
       this.result.columns = columns
       this.result.rows = rows
+    },
+    setError(msg: string) {
+      this.errorMsg = msg
     }
   }
 })
