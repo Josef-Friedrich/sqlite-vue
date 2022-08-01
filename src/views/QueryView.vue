@@ -37,9 +37,6 @@ function onValueChange (
     <MonacoEditor
       class="editor"
       :options="{ fontSize: 26, lineNumbers: 'off' }"
-      width="800"
-      height="300"
-      language="sql"
       @change="onValueChange"
       @editorDidMount="onEditorDidMount"
       @editorWillMount="onEditorWillMount"
@@ -52,7 +49,7 @@ function onValueChange (
 
 <style>
 .editor {
-  width: 600px;
-  height: 800px;
+  width: 100%;
+  height: 300px;
 }
 </style>
