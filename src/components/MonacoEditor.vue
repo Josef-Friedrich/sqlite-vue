@@ -28,11 +28,20 @@ export default defineComponent({
   methods: {
     initMonaco () {
       this.$emit('editorWillMount', monaco)
+      // https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneEditorConstructionOptions.html
       this.editor = monaco.editor.create(this.$el, {
         language: 'sql',
         theme: 'vs-dark',
         fontSize: 26,
-        lineNumbers: 'off'
+        lineNumbers: 'off',
+        lineDecorationsWidth: 0,
+        minimap: { enabled: false },
+        scrollbar: {
+          vertical: 'hidden',
+          horizontal: 'hidden'
+        },
+        renderLineHighlight: 'none',
+        overviewRulerLanes: 0
       })
 
       // @event `change`
@@ -53,8 +62,7 @@ export default defineComponent({
     _getValue () {
       if (!this.editor) return ''
       return editor.getValue()
-    },
-
+    }
   },
   watch: {
     value () {

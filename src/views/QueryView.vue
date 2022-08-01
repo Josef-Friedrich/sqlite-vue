@@ -33,10 +33,9 @@ function onValueChange (
 
 <template>
   <main>
-    <!-- https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneEditorConstructionOptions.html -->
+
     <MonacoEditor
       class="editor"
-      :options="{ fontSize: 26, lineNumbers: 'off' }"
       @change="onValueChange"
       @editorDidMount="onEditorDidMount"
       @editorWillMount="onEditorWillMount"
