@@ -8,7 +8,6 @@ const store = useTableStore()
 
 <template>
   <main>
-    <h1>Database scheme</h1>
     <result-table
       v-for="table in store.tables"
       :table="table"

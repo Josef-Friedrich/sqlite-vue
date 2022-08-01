@@ -5,10 +5,26 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <header>
     <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/database">Database</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+      <nav class="UnderlineNav">
+        <div class="UnderlineNav-body" role="tablist">
+          <RouterLink class="UnderlineNav-item" role="tab" type="button" to="/"
+            >Home</RouterLink
+          >
+          <RouterLink
+            class="UnderlineNav-item"
+            role="tab"
+            type="button"
+            to="/database"
+            >Database</RouterLink
+          >
+          <RouterLink
+            class="UnderlineNav-item"
+            role="tab"
+            type="button"
+            to="/about"
+            >About</RouterLink
+          >
+        </div>
       </nav>
     </div>
   </header>

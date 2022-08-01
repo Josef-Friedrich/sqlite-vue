@@ -33,8 +33,6 @@ function onValueChange (
 
 <template>
   <main>
-    Home
-
     <!-- https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneEditorConstructionOptions.html -->
     <MonacoEditor
       class="editor"
