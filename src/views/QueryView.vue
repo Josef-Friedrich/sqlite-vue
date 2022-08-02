@@ -14,7 +14,7 @@ const store = useTableStore()
 onMounted(async () => {
   if (!store.hasDatabase) {
     await openDb(
-      'https://raw.githubusercontent.com/bschlangaul-sammlung/datenbanken/main/sqlzoo/buses.sql'
+      'https://raw.githubusercontent.com/bschlangaul-sammlung/datenbanken/main/sqlzoo/world.sql'
     )
   }
 })

@@ -1,11 +1,12 @@
 openDb<script setup lang="ts">
 import { ref } from 'vue'
-import { openDb } from '@/sql'
+import { openDb, query } from '@/sql'
 let url = ref<string>()
 
 function onClick () {
   if (url.value != null) {
     openDb(url.value)
+    query.fetchDump(url.value)
   }
 }
 </script>

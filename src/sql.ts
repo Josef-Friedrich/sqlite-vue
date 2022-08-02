@@ -1,4 +1,4 @@
-import initSqlJs from 'sql.js'
+import initSqlJs, { type Database } from 'sql.js'
 import { useTableStore } from '@/stores/table'
 import type { Row } from '@/stores/table'
 
@@ -56,7 +56,25 @@ export async function openDb (url: string) {
 
   db = new SQL.Database()
   const dump = await fetchDumpFile(url)
+  console.log(dump)
   db.run(dump)
 
   importAllTables()
 }
+
+class DatabaseQuery {
+  db: Database
+
+  constructor() {
+    this.db = new SQL.Database()
+  }
+
+  async fetchDump(url: string) {
+    this.db.close()
+    this.db = new SQL.Database()
+    db.run(await fetchDumpFile(url))
+  }
+
+}
+
+export let query: DatabaseQuery = new DatabaseQuery()
