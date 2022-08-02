@@ -50,17 +50,6 @@ function importAllTables () {
   }
 }
 
-export async function openDb (url: string) {
-  const store = getStore()
-  store.$reset()
-
-  db = new SQL.Database()
-  const dump = await fetchDumpFile(url)
-  db.run(dump)
-
-  importAllTables()
-}
-
 class DatabaseQuery {
   db: Database
 
@@ -71,35 +60,58 @@ class DatabaseQuery {
   async fetchDump(url: string) {
     this.db.close()
     this.db = new SQL.Database()
-    db.run(await fetchDumpFile(url))
+    this.db.run(await fetchDumpFile(url))
     const store = getStore()
     store.setLastImportTimestamp()
   }
 
   get tableNames(): string[] {
     const names: string[] = []
-    const result = this.db.exec(
+    const results = this.db.exec(
       'SELECT name FROM sqlite_schema WHERE type = "table" AND name NOT LIKE "sqlite_%"'
     )
-    for (const name of result[0].values) {
-      names.push(name[0] as string)
+    for (const result of results) {
+      for (const name of result.values) {
+        names.push(name[0] as string)
+      }
     }
     return names
   }
 
-  getColumnsByTable(tableName: string) {
+  getColumnsByTable(tableName: string): ColumnSchema[] {
     const statement = this.db.prepare(
-      `pragma table_info('${tableName}')`
+      `PRAGMA TABLE_INFO('${tableName}')`
     )
-    const columns = []
+    const columns: ColumnSchema[] = []
     while (statement.step()) {
-      columns.push(new Column(statement.getAsObject()))
+      columns.push(new ColumnSchema(statement.getAsObject()))
     }
     return columns
   }
+
+  get databaseSchema (): DatabaseSchema {
+    const tables: TableSchema[] = []
+    for (const tableName of this.tableNames) {
+      const table = {
+        name: tableName,
+        columns: this.getColumnsByTable(tableName)
+      }
+      tables.push(table)
+    }
+    return {tables}
+  }
 }
 
-class Column {
+interface DatabaseSchema {
+  tables: TableSchema[]
+}
+
+interface TableSchema {
+  name: string
+  columns: ColumnSchema[]
+}
+
+class ColumnSchema {
   name: string
   dataType: string
   notNull: boolean

@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { openDb, query } from '@/sql'
+import { query } from '@/sql'
 
 function openByRelPath (relPath: string): void {
   const url = `https://raw.githubusercontent.com/bschlangaul-sammlung/datenbanken/main/${relPath}.sql`
-  openDb(url)
   query.fetchDump(url)
 }
 

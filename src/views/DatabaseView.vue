@@ -1,4 +1,4 @@
-getStore<script lang="ts" setup>
+<script lang="ts" setup>
 import ResultTable from '@/components/ResultTable.vue'
 import UrlOpener from '@/components/UrlOpener.vue'
 import DatabaseCollection from '@/components/DatabaseCollection.vue';
