@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import ResultTable from '@/components/ResultTable.vue'
 import MonacoEditor from '@/components/MonacoEditor.vue'
-import DatabaseScheme from '@/components/DatabaseScheme.vue'
+import DatabaseSchema from '@/components/DatabaseSchema.vue'
 import DatabaseCollection from '@/components/DatabaseCollection.vue'
 
 import { getStore } from '@/store'
@@ -33,7 +33,7 @@ function onValueChange (
 
     <database-collection />
 
-    <database-scheme />
+    <database-schema />
 
     <div v-if="store.errorMsg">{{ store.errorMsg }}</div>
     <result-table v-if="store.result" :table="store.result" />

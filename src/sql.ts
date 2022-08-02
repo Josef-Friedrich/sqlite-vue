@@ -1,6 +1,6 @@
 import initSqlJs, { Database } from 'sql.js'
 
-class ColumnSchema {
+export class ColumnSchema {
   name: string
   dataType: string
   notNull: boolean
