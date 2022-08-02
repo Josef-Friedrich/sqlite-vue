@@ -7,6 +7,32 @@
 import { defineComponent } from 'vue'
 import * as monaco from 'monaco-editor'
 
+// https://github.com/SadeghPM/sql-vscode-snipptes/blob/master/snippets/snippets.json
+monaco.languages.registerCompletionItemProvider('sql', {
+  provideCompletionItems: (model, position, context, token) => {
+    const word = model.getWordUntilPosition(position)
+    const range = {
+      startLineNumber: position.lineNumber,
+      endLineNumber: position.lineNumber,
+      startColumn: word.startColumn,
+      endColumn: word.endColumn
+    }
+    return {
+      suggestions: [
+        {
+          label: 'SELECT FROM',
+          kind: monaco.languages.CompletionItemKind.Snippet,
+          documentation: 'select',
+          insertText: 'SELECT ${1:*} FROM ${2:table}',
+          insertTextRules:
+            monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          range
+        }
+      ]
+    }
+  }
+})
+
 export default defineComponent({
   name: 'MonacoEditor',
   emits: ['editorWillMount', 'editorDidMount', 'change'],
