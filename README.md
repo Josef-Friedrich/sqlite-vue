@@ -1,4 +1,4 @@
-# SQLöwe
+# SQLama
 
 ## SQL in the browser
 
