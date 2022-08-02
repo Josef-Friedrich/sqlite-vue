@@ -20,7 +20,7 @@ function formatColumns (columns: ColumnSchema[]) {
 </script>
 
 <template>
-  <section v-if="store.databaseSchema" class="content" id="database-schema">
+  <section v-if="store.databaseSchema" class="content box" id="database-schema">
     <h2>Database schema</h2>
 
     <p v-for="(table, index) in store.databaseSchema.tables" :key="index">
