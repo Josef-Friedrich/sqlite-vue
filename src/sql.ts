@@ -72,6 +72,8 @@ class DatabaseQuery {
     this.db.close()
     this.db = new SQL.Database()
     db.run(await fetchDumpFile(url))
+    const store = getStore()
+    store.setLastImportTimestamp()
   }
 
   get tableNames(): string[] {

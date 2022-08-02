@@ -11,6 +11,7 @@ export interface Table {
 }
 
 interface State {
+  lastImport: number | null
   tables: { [name: string]: Table }
   result: Table | null
   errorMsg: string | null
@@ -19,6 +20,7 @@ interface State {
 export const getStore = defineStore('table', {
   state: (): State => {
     return {
+      lastImport: null,
       tables: {},
       result: null,
       errorMsg: null
@@ -39,6 +41,10 @@ export const getStore = defineStore('table', {
         columns,
         rows
       }
+    },
+    setLastImportTimestamp () {
+      console.log(new Date().getTime())
+      this.lastImport = new Date().getTime()
     },
     setResult (columns: string[], rows: Row[]) {
       this.errorMsg = null
