@@ -4,20 +4,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, toRefs } from 'vue'
+import { defineComponent } from 'vue'
 import * as monaco from 'monaco-editor'
 
 export default defineComponent({
   name: 'MonacoEditor',
-  props: {
-    original: String,
-    options: {
-      type: Object,
-      default () {
-        return {}
-      }
-    }
-  },
   emits: ['editorWillMount', 'editorDidMount', 'change'],
   mounted () {
     this.initMonaco()
@@ -57,11 +48,15 @@ export default defineComponent({
     },
 
     _setValue (value) {
-      if (this.editor) return editor.setValue(value)
+      if (this.editor) {
+        return this.editor.setValue(value)
+      }
     },
     _getValue () {
-      if (!this.editor) return ''
-      return editor.getValue()
+      if (!this.editor) {
+        return ''
+      }
+      return this.editor.getValue()
     }
   },
   watch: {
