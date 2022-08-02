@@ -26,16 +26,15 @@ function onValueChange (
 
 <template>
   <main>
-    <monaco-editor
-      class="editor"
-      @change="onValueChange"
-    />
+    <monaco-editor class="editor" @change="onValueChange" />
 
     <database-collection />
 
     <database-schema />
 
-    <div v-if="store.errorMsg">{{ store.errorMsg }}</div>
+    <section v-if="store.errorMsg" class="message is-danger">
+      <div class="message-body">{{ store.errorMsg }}</div>
+    </section>
     <result-table v-if="store.result" :table="store.result" />
   </main>
 </template>

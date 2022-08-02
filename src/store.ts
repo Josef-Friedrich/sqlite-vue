@@ -59,6 +59,7 @@ export const getStore = defineStore('table', {
       this.result = null
       this.updateDatabaseSchema()
       editor?.setValue('')
+      editor?.focus()
     },
     async openDatabaseByRelPath (relPath: string): Promise<void> {
       await this.openDatabaseByUrl(

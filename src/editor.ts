@@ -63,7 +63,7 @@ export function create (
   editor = monaco.editor.create(element, {
     language: 'sql',
     theme: 'vs-dark',
-    fontSize: 26,
+    fontSize: 32,
     lineNumbers: 'off',
     lineDecorationsWidth: 0,
     minimap: { enabled: false },
@@ -72,7 +72,9 @@ export function create (
       horizontal: 'hidden'
     },
     renderLineHighlight: 'none',
-    overviewRulerLanes: 0
+    overviewRulerLanes: 0,
+    padding: { top: 15, bottom: 15 },
+    wordWrap: 'on'
   })
   return editor
 }
