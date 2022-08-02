@@ -41,7 +41,6 @@ export interface TableData extends ResultData {
 
 async function fetchDumpFile (url: string): Promise<string> {
   const response = await fetch(url)
-  console.log(response)
   return response.text()
 }
 

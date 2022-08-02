@@ -7,17 +7,8 @@ import DatabaseCollection from '@/components/DatabaseCollection.vue'
 import { getStore } from '@/store'
 import { query } from '@/sql'
 import type { editor } from 'monaco-editor'
-import type * as Monaco from 'monaco-editor'
 
 const store = getStore()
-
-function onEditorWillMount (editor: editor.ICodeEditor) {
-  console.log(editor)
-}
-
-function onEditorDidMount (monaco: typeof Monaco) {
-  console.log(monaco)
-}
 
 function onValueChange (
   value: string,
@@ -38,8 +29,6 @@ function onValueChange (
     <monaco-editor
       class="editor"
       @change="onValueChange"
-      @editorDidMount="onEditorDidMount"
-      @editorWillMount="onEditorWillMount"
     />
 
     <database-collection />
