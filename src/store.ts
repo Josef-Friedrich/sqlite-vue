@@ -1,19 +1,11 @@
 import { defineStore } from 'pinia'
 
-export type Cell = string | number | boolean | null | Uint8Array
-
-export type Row = Cell[]
-
-export interface Table {
-  name: string
-  columns: string[]
-  rows: Row[]
-}
+import type {TableData, ResultData, RowData} from '@/sql'
 
 interface State {
   lastImport: number | null
-  tables: { [name: string]: Table }
-  result: Table | null
+  tables: { [name: string]: TableData }
+  result: ResultData | null
   errorMsg: string | null
 }
 
@@ -35,20 +27,21 @@ export const getStore = defineStore('table', {
     }
   },
   actions: {
-    add (name: string, columns: string[], rows: Row[]) {
+    add (name: string, columns: string[], rows: RowData[]) {
       this.tables[name] = {
         name,
         columns,
-        rows
+        rows,
+        allRowsCount: rows.length
       }
     },
     setLastImportTimestamp () {
       console.log(new Date().getTime())
       this.lastImport = new Date().getTime()
     },
-    setResult (columns: string[], rows: Row[]) {
+    setResult (result: ResultData) {
       this.errorMsg = null
-      this.result = { name: 'Result', columns, rows }
+      this.result = result
     },
     setError (msg: string) {
       this.errorMsg = msg

@@ -1,14 +1,12 @@
-openDb
 <script lang="ts" setup>
 import ResultTable from '@/components/ResultTable.vue'
-// import MonacoEditor from 'monaco-editor-vue3'
 import MonacoEditor from '@/components/MonacoEditor.vue'
 import DatabaseScheme from '@/components/DatabaseScheme.vue'
 import DatabaseCollection from '@/components/DatabaseCollection.vue'
 
 import { getStore } from '@/store'
 import { onMounted } from 'vue'
-import { execSql } from '@/sql'
+import { query } from '@/sql'
 import type { editor } from 'monaco-editor'
 import type * as Monaco from 'monaco-editor'
 
@@ -34,7 +32,13 @@ function onValueChange (
   value: string,
   event: editor.IModelContentChangedEvent
 ) {
-  execSql(value)
+  try {
+    const result = query.exec(value)
+    store.setResult(result)
+  } catch (e) {
+    const error: Error = e as Error
+    store.setError(error.message)
+  }
 }
 </script>
 
