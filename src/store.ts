@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
 
-import type {TableData, ResultData, RowData} from '@/sql'
+import type { TableData, ResultData, RowData, DatabaseSchema } from '@/sql'
+import { query } from '@/sql'
 
 interface State {
   lastImport: number | null
   tables: { [name: string]: TableData }
+  databaseSchema: DatabaseSchema | null
   result: ResultData | null
   errorMsg: string | null
 }
@@ -14,6 +16,7 @@ export const getStore = defineStore('table', {
     return {
       lastImport: null,
       tables: {},
+      databaseSchema: null,
       result: null,
       errorMsg: null
     }
@@ -46,6 +49,15 @@ export const getStore = defineStore('table', {
     setError (msg: string) {
       this.errorMsg = msg
       this.result = null
+    },
+    updateDatabaseSchema () {
+      this.databaseSchema = query.databaseSchema
+    },
+    async openDatabaseByRelPath (relPath: string): Promise<void> {
+      const url = `https://raw.githubusercontent.com/bschlangaul-sammlung/datenbanken/main/${relPath}.sql`
+      await query.fetchDump(url)
+      this.result = null
+      this.updateDatabaseSchema()
     }
   }
 })

@@ -1,4 +1,4 @@
-import initSqlJs, { type Database } from 'sql.js'
+import initSqlJs, { Database } from 'sql.js'
 
 class ColumnSchema {
   name: string
@@ -7,7 +7,7 @@ class ColumnSchema {
   defaultValue: any
   primaryKey: boolean
 
-  constructor(result: Record<string, CellData>) {
+  constructor (result: Record<string, CellData>) {
     this.name = String(result.name)
     this.dataType = String(result.type)
     this.notNull = result.notnull == 1
@@ -21,7 +21,7 @@ interface TableSchema {
   columns: ColumnSchema[]
 }
 
-interface DatabaseSchema {
+export interface DatabaseSchema {
   tables: TableSchema[]
 }
 
@@ -30,9 +30,9 @@ export type CellData = string | number | boolean | null | Uint8Array
 export type RowData = CellData[]
 
 export interface ResultData {
-    columns: string[]
-    rows: RowData[]
-    allRowsCount: number
+  columns: string[]
+  rows: RowData[]
+  allRowsCount: number
 }
 
 export interface TableData extends ResultData {
@@ -54,39 +54,31 @@ const SQL = await initSqlJs({
 class DatabaseQuery {
   db: Database
 
-  constructor() {
+  constructor () {
     this.db = new SQL.Database()
   }
 
-  async fetchDump(url: string) {
+  async fetchDump (url: string) {
     this.db.close()
     this.db = new SQL.Database()
     this.db.run(await fetchDumpFile(url))
   }
 
-  public exec(sql: string): ResultData {
-
+  public exec (sql: string, columnsToStore: number = 50): ResultData {
     const statement = this.db.prepare(sql)
-
-      const columns = statement.getColumnNames()
-
-      const rows: RowData[] = []
-      let counter = 0
-      while (statement.step()) {
-        if (counter < 50) {
-          rows.push(statement.get())
-        }
-
-        counter++
+    const columns = statement.getColumnNames()
+    const rows: RowData[] = []
+    let counter = 0
+    while (statement.step()) {
+      if (counter < columnsToStore) {
+        rows.push(statement.get())
       }
-
-    return { columns,
-      rows,
-      allRowsCount: counter
+      counter++
     }
+    return { columns, rows, allRowsCount: counter }
   }
 
-  public get tableNames(): string[] {
+  public get tableNames (): string[] {
     const names: string[] = []
     const results = this.db.exec(
       'SELECT name FROM sqlite_schema WHERE type = "table" AND name NOT LIKE "sqlite_%"'
@@ -99,10 +91,8 @@ class DatabaseQuery {
     return names
   }
 
-  private getColumnsByTable(tableName: string): ColumnSchema[] {
-    const statement = this.db.prepare(
-      `PRAGMA TABLE_INFO('${tableName}')`
-    )
+  private getColumnsByTable (tableName: string): ColumnSchema[] {
+    const statement = this.db.prepare(`PRAGMA TABLE_INFO('${tableName}')`)
     const columns: ColumnSchema[] = []
     while (statement.step()) {
       columns.push(new ColumnSchema(statement.getAsObject()))
@@ -119,7 +109,7 @@ class DatabaseQuery {
       }
       tables.push(table)
     }
-    return {tables}
+    return { tables }
   }
 }
 
