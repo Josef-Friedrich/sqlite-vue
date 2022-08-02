@@ -54,12 +54,16 @@ export const getStore = defineStore('table', {
     updateDatabaseSchema () {
       this.databaseSchema = query.databaseSchema
     },
-    async openDatabaseByRelPath (relPath: string): Promise<void> {
-      const url = `https://raw.githubusercontent.com/bschlangaul-sammlung/datenbanken/main/${relPath}.sql`
+    async openDatabaseByUrl (url: string): Promise<void> {
       await query.fetchDump(url)
       this.result = null
       this.updateDatabaseSchema()
       editor?.setValue('')
+    },
+    async openDatabaseByRelPath (relPath: string): Promise<void> {
+      await this.openDatabaseByUrl(
+        `https://raw.githubusercontent.com/bschlangaul-sammlung/datenbanken/main/${relPath}.sql`
+      )
     }
   }
 })

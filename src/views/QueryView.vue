@@ -5,20 +5,11 @@ import DatabaseScheme from '@/components/DatabaseScheme.vue'
 import DatabaseCollection from '@/components/DatabaseCollection.vue'
 
 import { getStore } from '@/store'
-import { onMounted } from 'vue'
 import { query } from '@/sql'
 import type { editor } from 'monaco-editor'
 import type * as Monaco from 'monaco-editor'
 
 const store = getStore()
-
-onMounted(async () => {
-  if (!store.hasDatabase) {
-    // await openDb(
-    //   'https://raw.githubusercontent.com/bschlangaul-sammlung/datenbanken/main/sqlzoo/world.sql'
-    // )
-  }
-})
 
 function onEditorWillMount (editor: editor.ICodeEditor) {
   console.log(editor)

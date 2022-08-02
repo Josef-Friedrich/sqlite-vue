@@ -40,7 +40,9 @@ export interface TableData extends ResultData {
 }
 
 async function fetchDumpFile (url: string): Promise<string> {
-  return await (await fetch(url)).text()
+  const response = await fetch(url)
+  console.log(response)
+  return response.text()
 }
 
 const SQL = await initSqlJs({
