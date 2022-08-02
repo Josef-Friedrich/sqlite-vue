@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-type Cell = string | number | boolean | null | Uint8Array
+export type Cell = string | number | boolean | null | Uint8Array
 
 export type Row = Cell[]
 

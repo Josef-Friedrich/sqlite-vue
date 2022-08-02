@@ -3,6 +3,8 @@ openDb
 import ResultTable from '@/components/ResultTable.vue'
 // import MonacoEditor from 'monaco-editor-vue3'
 import MonacoEditor from '@/components/MonacoEditor.vue'
+import DatabaseScheme from '@/components/DatabaseScheme.vue'
+
 import { useTableStore } from '@/stores/table'
 import { onMounted } from 'vue'
 import { openDb, execSql } from '@/sql'
@@ -41,8 +43,10 @@ function onValueChange (
       @editorWillMount="onEditorWillMount"
     />
 
+    <database-scheme/>
+
     <div v-if="store.errorMsg">{{ store.errorMsg }}</div>
-    <result-table v-if="store.result" :table="store.result"></result-table>
+    <result-table v-if="store.result" :table="store.result"/>
   </main>
 </template>
 

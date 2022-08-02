@@ -1,5 +1,5 @@
 <template>
   <div class="about">
-    SQLöwe
+    SQLama
   </div>
 </template>
