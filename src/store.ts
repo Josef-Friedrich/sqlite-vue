@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 
 import type { TableData, ResultData, RowData, DatabaseSchema } from '@/sql'
 import { query } from '@/sql'
+import { editor } from '@/editor'
 
 interface State {
   lastImport: number | null
@@ -58,6 +59,7 @@ export const getStore = defineStore('table', {
       await query.fetchDump(url)
       this.result = null
       this.updateDatabaseSchema()
+      editor?.setValue('')
     }
   }
 })

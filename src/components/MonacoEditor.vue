@@ -6,32 +6,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import * as monaco from 'monaco-editor'
-
-// https://github.com/SadeghPM/sql-vscode-snipptes/blob/master/snippets/snippets.json
-monaco.languages.registerCompletionItemProvider('sql', {
-  provideCompletionItems: (model, position, context, token) => {
-    const word = model.getWordUntilPosition(position)
-    const range = {
-      startLineNumber: position.lineNumber,
-      endLineNumber: position.lineNumber,
-      startColumn: word.startColumn,
-      endColumn: word.endColumn
-    }
-    return {
-      suggestions: [
-        {
-          label: 'SELECT FROM',
-          kind: monaco.languages.CompletionItemKind.Snippet,
-          documentation: 'select',
-          insertText: 'SELECT ${1:*} FROM ${2:table}',
-          insertTextRules:
-            monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-          range
-        }
-      ]
-    }
-  }
-})
+import { create } from '@/editor'
 
 export default defineComponent({
   name: 'MonacoEditor',
@@ -39,30 +14,16 @@ export default defineComponent({
   mounted () {
     this.initMonaco()
   },
-  beforeDestroy () {
+  beforeDestroy (): void {
     this.editor && this.editor.dispose()
   },
   methods: {
-    initMonaco () {
+    initMonaco (): void {
       this.$emit('editorWillMount', monaco)
       // https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneEditorConstructionOptions.html
-      this.editor = monaco.editor.create(this.$el, {
-        language: 'sql',
-        theme: 'vs-dark',
-        fontSize: 26,
-        lineNumbers: 'off',
-        lineDecorationsWidth: 0,
-        minimap: { enabled: false },
-        scrollbar: {
-          vertical: 'hidden',
-          horizontal: 'hidden'
-        },
-        renderLineHighlight: 'none',
-        overviewRulerLanes: 0
-      })
+      this.editor = create(this.$el)
 
       // @event `change`
-
       this.editor.onDidChangeModelContent(event => {
         const value = this.editor.getValue()
         if (this.value !== value) {
@@ -73,12 +34,12 @@ export default defineComponent({
       this.$emit('editorDidMount', this.editor)
     },
 
-    _setValue (value) {
+    _setValue (value: string) {
       if (this.editor) {
         return this.editor.setValue(value)
       }
     },
-    _getValue () {
+    _getValue (): string {
       if (!this.editor) {
         return ''
       }
