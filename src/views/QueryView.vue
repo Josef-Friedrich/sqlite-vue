@@ -5,13 +5,13 @@ import ResultTable from '@/components/ResultTable.vue'
 import MonacoEditor from '@/components/MonacoEditor.vue'
 import DatabaseScheme from '@/components/DatabaseScheme.vue'
 
-import { useTableStore } from '@/stores/table'
+import { getStore } from '@/store'
 import { onMounted } from 'vue'
 import { openDb, execSql } from '@/sql'
 import type { editor } from 'monaco-editor'
 import type * as Monaco from 'monaco-editor'
 
-const store = useTableStore()
+const store = getStore()
 
 onMounted(async () => {
   if (!store.hasDatabase) {

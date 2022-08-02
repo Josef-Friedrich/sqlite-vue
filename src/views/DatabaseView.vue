@@ -1,10 +1,10 @@
-<script lang="ts" setup>
+getStore<script lang="ts" setup>
 import ResultTable from '@/components/ResultTable.vue'
 import UrlOpener from '@/components/UrlOpener.vue'
 import DatabaseCollection from '@/components/DatabaseCollection.vue';
-import { useTableStore } from '@/stores/table'
+import { getStore } from '@/store'
 
-const store = useTableStore()
+const store = getStore()
 </script>
 
 <template>

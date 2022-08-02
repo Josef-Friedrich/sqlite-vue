@@ -1,6 +1,6 @@
 import initSqlJs, { type Database } from 'sql.js'
-import { useTableStore } from '@/stores/table'
-import type { Row, Cell } from '@/stores/table'
+import { getStore } from '@/store'
+import type { Row, Cell } from '@/store'
 
 async function fetchDumpFile (url: string): Promise<string> {
   return await (await fetch(url)).text()
@@ -17,7 +17,7 @@ const SQL = await initSqlJs({
 let db = new SQL.Database()
 
 export function execSql (sql: string) {
-  const store = useTableStore()
+  const store = getStore()
   try {
     const result = db.exec(sql)[0]
     store.setResult(result.columns, result.values)
@@ -28,7 +28,7 @@ export function execSql (sql: string) {
 }
 
 function importTable (name: string) {
-  const store = useTableStore()
+  const store = getStore()
 
   const statement = db.prepare('SELECT * FROM ' + name)
 
@@ -51,7 +51,7 @@ function importAllTables () {
 }
 
 export async function openDb (url: string) {
-  const store = useTableStore()
+  const store = getStore()
   store.$reset()
 
   db = new SQL.Database()

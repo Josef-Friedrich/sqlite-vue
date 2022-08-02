@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Table } from '../stores/table'
+import type { Table } from '@/store'
 interface Props {
   table: Table
 }

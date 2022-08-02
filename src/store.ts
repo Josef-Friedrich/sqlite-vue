@@ -16,7 +16,7 @@ interface State {
   errorMsg: string | null
 }
 
-export const useTableStore = defineStore('table', {
+export const getStore = defineStore('table', {
   state: (): State => {
     return {
       tables: {},
