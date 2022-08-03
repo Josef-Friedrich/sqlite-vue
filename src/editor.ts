@@ -56,7 +56,7 @@ monaco.languages.registerCompletionItemProvider('sql', {
 })
 
 export let editor: monaco.editor.IStandaloneCodeEditor | null
-
+// https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneEditorConstructionOptions.html
 export function create (
   element: HTMLElement
 ): monaco.editor.IStandaloneCodeEditor {
