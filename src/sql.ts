@@ -59,22 +59,28 @@ class DatabaseQuery {
     this.db = new SQL.Database()
   }
 
-  private reopenDatabase (data?: ArrayLike<number> | Buffer): void {
+  public async open (dataOrUrl: string | ArrayLike<number>) {
+    let sqlDump: string | undefined = undefined
+    let binaryData: ArrayLike<number> | undefined = undefined
+
+    if (typeof dataOrUrl === 'string') {
+      if (dataOrUrl.match(/^https?:\/\/.*/i)) {
+        sqlDump = await fetchDumpFile(dataOrUrl)
+      } else {
+        sqlDump = dataOrUrl
+      }
+    } else if (
+      typeof dataOrUrl === 'object' &&
+      typeof dataOrUrl.length === 'number'
+    ) {
+      binaryData = dataOrUrl
+    }
+
     this.db.close()
-    this.db = new SQL.Database(data)
-  }
-
-  public importBinaryDbFile (data: ArrayLike<number> | Buffer) {
-    this.reopenDatabase(data)
-  }
-
-  public importDump (dump: string): void {
-    this.reopenDatabase()
-    this.db.run(dump)
-  }
-
-  public async fetchDump (url: string): Promise<void> {
-    this.importDump(await fetchDumpFile(url))
+    this.db = new SQL.Database(binaryData)
+    if (sqlDump != null) {
+      this.db.run(sqlDump)
+    }
   }
 
   public exec (sql: string, columnsToStore: number = 50): ResultData {

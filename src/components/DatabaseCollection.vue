@@ -16,7 +16,7 @@ const dumpFiles = [
 <template>
   <section>
     <button
-      @click="store.openDatabaseByRelPath(dumpFile)"
+      @click="store.openDatabaseFromBschlangaul(dumpFile)"
       v-for="(dumpFile, index) in dumpFiles"
       :key="index"
     >

@@ -3,9 +3,9 @@ import { ref } from 'vue'
 import { query } from '@/sql'
 const url = ref<string>()
 
-function onClick () {
+async function onClick () {
   if (url.value != null) {
-    query.fetchDump(url.value)
+    await query.open(url.value)
   }
 }
 </script>

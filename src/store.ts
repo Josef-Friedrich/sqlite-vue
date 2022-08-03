@@ -57,21 +57,12 @@ export const getStore = defineStore('table', {
       editor?.setValue('')
       editor?.focus()
     },
-
-    async openDatabaseByBinaryDbFile (data: ArrayLike<number> | Buffer): Promise<void> {
-      query.importBinaryDbFile(data)
+    async openDatabase (dataOrUrl: ArrayLike<number> | string): Promise<void> {
+      await query.open(dataOrUrl)
       this.updateAfterImport()
     },
-    async openDatabaseByDump (dump: string): Promise<void> {
-      query.importDump(dump)
-      this.updateAfterImport()
-    },
-    async openDatabaseByUrl (url: string): Promise<void> {
-      await query.fetchDump(url)
-      this.updateAfterImport()
-    },
-    async openDatabaseByRelPath (relPath: string): Promise<void> {
-      await this.openDatabaseByUrl(
+    async openDatabaseFromBschlangaul (relPath: string): Promise<void> {
+      await this.openDatabase(
         `https://raw.githubusercontent.com/bschlangaul-sammlung/datenbanken/main/${relPath}.sql`
       )
     }
