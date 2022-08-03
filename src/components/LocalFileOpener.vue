@@ -5,24 +5,10 @@ const store = getStore()
 async function readFile (event: Event) {
   const element = <HTMLInputElement>event!.target
   const file = element!.files![0]
-  const reader = new FileReader()
-
   if (file.type === 'application/sql') {
-    reader.readAsText(file, 'utf-8')
-    reader.onload = readerEvent => {
-      const content = readerEvent!.target!.result
-      if (content != null && typeof content === 'string') {
-        store.openDatabaseByDump(content)
-      }
-    }
+    store.openDatabaseByDump(await file.text())
   } else if (file.type === 'application/vnd.sqlite3') {
-    reader.readAsArrayBuffer(file)
-    reader.onload = readerEvent => {
-      const content = readerEvent!.target!.result
-      if (content != null && typeof content !== 'string') {
-        store.openDatabaseByBinaryDbFile(new Uint8Array(content))
-      }
-    }
+    store.openDatabaseByBinaryDbFile(new Uint8Array(await file.arrayBuffer()))
   }
 }
 </script>
