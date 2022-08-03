@@ -51,15 +51,24 @@ export const getStore = defineStore('table', {
       this.errorMsg = msg
       this.result = null
     },
-    updateDatabaseSchema () {
+    updateAfterImport () {
+      this.result = null
       this.databaseSchema = query.databaseSchema
+      editor?.setValue('')
+      editor?.focus()
+    },
+
+    async openDatabaseByBinaryDbFile (data: ArrayLike<number> | Buffer): Promise<void> {
+      query.importBinaryDbFile(data)
+      this.updateAfterImport()
+    },
+    async openDatabaseByDump (dump: string): Promise<void> {
+      query.importDump(dump)
+      this.updateAfterImport()
     },
     async openDatabaseByUrl (url: string): Promise<void> {
       await query.fetchDump(url)
-      this.result = null
-      this.updateDatabaseSchema()
-      editor?.setValue('')
-      editor?.focus()
+      this.updateAfterImport()
     },
     async openDatabaseByRelPath (relPath: string): Promise<void> {
       await this.openDatabaseByUrl(

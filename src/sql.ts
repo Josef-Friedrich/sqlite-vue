@@ -59,10 +59,22 @@ class DatabaseQuery {
     this.db = new SQL.Database()
   }
 
-  async fetchDump (url: string) {
+  private reopenDatabase (data?: ArrayLike<number> | Buffer): void {
     this.db.close()
-    this.db = new SQL.Database()
-    this.db.run(await fetchDumpFile(url))
+    this.db = new SQL.Database(data)
+  }
+
+  public importBinaryDbFile (data: ArrayLike<number> | Buffer) {
+    this.reopenDatabase(data)
+  }
+
+  public importDump (dump: string): void {
+    this.reopenDatabase()
+    this.db.run(dump)
+  }
+
+  public async fetchDump (url: string): Promise<void> {
+    this.importDump(await fetchDumpFile(url))
   }
 
   public exec (sql: string, columnsToStore: number = 50): ResultData {

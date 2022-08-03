@@ -3,6 +3,7 @@ import ResultTable from '@/components/ResultTable.vue'
 import MonacoEditor from '@/components/MonacoEditor.vue'
 import DatabaseSchema from '@/components/DatabaseSchema.vue'
 import DatabaseCollection from '@/components/DatabaseCollection.vue'
+import LocalFileOpener from '@/components/LocalFileOpener.vue'
 
 import { getStore } from '@/store'
 import { query } from '@/sql'
@@ -31,6 +32,8 @@ function onValueChange (
     <database-collection />
 
     <database-schema />
+
+    <local-file-opener />
 
     <section v-if="store.errorMsg" class="message is-danger">
       <div class="message-body">{{ store.errorMsg }}</div>
