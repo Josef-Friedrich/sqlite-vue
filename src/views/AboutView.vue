@@ -2,6 +2,6 @@
   <div class="about">
     SQLama
 
-    <img src="../assets/logo.png" alt="">
+    <img src="../assets/logo.png">
   </div>
 </template>
