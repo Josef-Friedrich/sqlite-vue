@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineEmits } from 'vue'
+import { ref, onMounted } from 'vue'
 import type * as monaco from 'monaco-editor'
 import { create } from '@/editor'
 
