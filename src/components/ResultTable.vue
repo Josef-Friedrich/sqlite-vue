@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Table } from '@/store'
+import type { TableData, ResultData } from '@/sql'
 interface Props {
-  table: Table
+  table: TableData | ResultData
 }
 
 const props = defineProps<Props>()
@@ -9,7 +9,9 @@ const props = defineProps<Props>()
 
 <template>
   <section class="content">
-    <h2>{{ table.name }}</h2>
+    <h2 v-if="'name' in table">{{ table.name }}</h2>
+
+    Row count: {{ table.allRowsCount }}
 
     <table class="table is-striped is-bordered is-hoverable is-narrow">
       <thead>
