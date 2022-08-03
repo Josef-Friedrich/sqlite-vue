@@ -2,20 +2,10 @@
 import { getStore } from '@/store'
 const store = getStore()
 
-function convertToBinArray (input: string) {
-  var l = input.length,
-    arr = new Uint8Array(l)
-  for (var i = 0; i < l; i++) {
-    arr[i] = input.charCodeAt(i)
-  }
-  return arr
-}
-
 async function readFile (event: Event) {
   const element = <HTMLInputElement>event!.target
   const file = element!.files![0]
   const reader = new FileReader()
-  console.log(file)
 
   if (file.type === 'application/sql') {
     reader.readAsText(file, 'utf-8')
@@ -26,11 +16,11 @@ async function readFile (event: Event) {
       }
     }
   } else if (file.type === 'application/vnd.sqlite3') {
-    reader.readAsText(file)
+    reader.readAsArrayBuffer(file)
     reader.onload = readerEvent => {
       const content = readerEvent!.target!.result
-      if (content != null && typeof content === 'string') {
-        store.openDatabaseByBinaryDbFile(convertToBinArray(content))
+      if (content != null && typeof content !== 'string') {
+        store.openDatabaseByBinaryDbFile(new Uint8Array(content))
       }
     }
   }
