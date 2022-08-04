@@ -1,7 +1,10 @@
-export {};
+export {}
 
 declare global {
   interface Window {
-    MonacoEnvironment: any;
+    MonacoEnvironment: any
+
   }
+
+  VERSION: str
 }

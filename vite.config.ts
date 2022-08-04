@@ -1,5 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 
+import packageConfig from './package.json' assert { type: 'json' };
+
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import monaco from 'rollup-plugin-monaco-editor'
@@ -19,5 +21,8 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  define: {
+    VERSION: JSON.stringify(packageConfig.version)
   }
 })
