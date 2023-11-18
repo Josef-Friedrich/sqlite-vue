@@ -12,7 +12,7 @@ self.MonacoEnvironment = {
 
 // https://github.com/SadeghPM/sql-vscode-snipptes/blob/master/snippets/snippets.json
 monaco.languages.registerCompletionItemProvider('sql', {
-  provideCompletionItems: (model, position, context, token) => {
+  provideCompletionItems: (model, position) => {
     const word = model.getWordUntilPosition(position)
     const range = {
       startLineNumber: position.lineNumber,
