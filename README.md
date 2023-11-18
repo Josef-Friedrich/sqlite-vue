@@ -2,11 +2,17 @@
 
 ![](https://raw.githubusercontent.com/Josef-Friedrich/SQLama/main/src/assets/logo.png)
 
-## SQL in the browser
+## SQL editor in the browser
 
 * https://github.com/sqlpad/sqlpad
 * https://sqlime.org
 * https://github.com/zzzprojects/sqlfiddle2
+
+
+## SQL language server protocol
+
+* https://github.com/joe-re/sql-language-server (Typescript)
+* https://github.com/lighttiger2505/sqls (Go)
 
 ## Project Setup
 
