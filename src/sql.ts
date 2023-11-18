@@ -132,6 +132,19 @@ class DatabaseQuery {
     }
     return { tables }
   }
+
+  public getSqliteVersion (): string {
+    const result = this.db.exec(
+      'SELECT sqlite_version() AS version'
+    )
+    const version = result[0].values[0][0]
+
+    if (version == null) {
+      throw new Error(`Could not get SQLite version`)
+    }
+
+    return String(version)
+  }
 }
 
 export const query: DatabaseQuery = new DatabaseQuery()
