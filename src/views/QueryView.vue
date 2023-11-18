@@ -18,6 +18,7 @@ function onValueChange (
   try {
     const result = query.exec(value)
     store.setResult(result)
+    console.log(event)
   } catch (e) {
     const error: Error = e as Error
     store.setError(error.message)
@@ -27,18 +28,18 @@ function onValueChange (
 
 <template>
   <main>
-    <monaco-editor class="editor" @change="onValueChange" />
+    <MonacoEditor class="editor" @change="onValueChange" />
 
-    <database-collection />
+    <DatabaseCollection />
 
-    <database-schema />
+    <DatabaseSchema />
 
-    <local-file-opener />
+    <LocalFileOpener />
 
     <section v-if="store.errorMsg" class="message is-danger">
       <div class="message-body">{{ store.errorMsg }}</div>
     </section>
-    <result-table v-if="store.result" :table="store.result" />
+    <ResultTable v-if="store.result" :table="store.result" />
   </main>
 </template>
 

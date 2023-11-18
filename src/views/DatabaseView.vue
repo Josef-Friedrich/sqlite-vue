@@ -9,8 +9,8 @@ const store = getStore()
 
 <template>
   <main>
-    <url-opener></url-opener>
-    <database-collection></database-collection>
+    <UrlOpener />
+    <Database-Collection />
     <result-table
       v-for="table in store.tables"
       :table="table"

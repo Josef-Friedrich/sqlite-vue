@@ -4,7 +4,7 @@ interface Props {
   table: TableData | ResultData
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 </script>
 
 <template>
