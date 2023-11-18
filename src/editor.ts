@@ -2,34 +2,12 @@ import * as monaco from 'monaco-editor'
 
 // https://github.com/vitejs/vite/discussions/1791
 self.MonacoEnvironment = {
-  getWorker: async function (workerId, label) {
-    let worker
-
-    switch (label) {
-      case 'json':
-        worker = await import('monaco-editor/esm/vs/language/json/json.worker?worker');
-        break;
-      case 'css':
-      case 'scss':
-      case 'less':
-        worker = await import('monaco-editor/esm/vs/language/css/css.worker?worker');
-        break;
-      case 'html':
-      case 'handlebars':
-      case 'razor':
-        worker = await import('monaco-editor/esm/vs/language/html/html.worker?worker');
-        break;
-      case 'typescript':
-      case 'javascript':
-        worker = await import('monaco-editor/esm/vs/language/typescript/ts.worker?worker');
-        break;
-      default:
-        worker = await import('monaco-editor/esm/vs/editor/editor.worker?worker');
-    }
-
+  getWorker: async function () {
+    const worker = await import(
+      'monaco-editor/esm/vs/editor/editor.worker?worker'
+    )
     return new worker.default()
   }
-
 }
 
 // https://github.com/SadeghPM/sql-vscode-snipptes/blob/master/snippets/snippets.json
@@ -60,7 +38,7 @@ monaco.languages.registerCompletionItemProvider('sql', {
 
 export let editor: monaco.editor.IStandaloneCodeEditor | null
 // https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.IStandaloneEditorConstructionOptions.html
-export function create (
+export function create(
   element: HTMLElement
 ): monaco.editor.IStandaloneCodeEditor {
   editor = monaco.editor.create(element, {
