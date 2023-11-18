@@ -1,4 +1,6 @@
-import initSqlJs, { Database } from 'sql.js'
+import type { Database } from 'sql.js'
+
+import initSqlJs from 'sql.js'
 
 export class ColumnSchema {
   name: string
@@ -132,4 +134,4 @@ class DatabaseQuery {
   }
 }
 
-export let query: DatabaseQuery = new DatabaseQuery()
+export const query: DatabaseQuery = new DatabaseQuery()
