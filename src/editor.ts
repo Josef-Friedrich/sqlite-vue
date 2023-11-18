@@ -1,31 +1,35 @@
 import * as monaco from 'monaco-editor'
 
 // https://github.com/vitejs/vite/discussions/1791
-import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
-// import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
-// import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
-// import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
-// import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
-
-// Since packaging is done by you, you need to instruct the editor how you named
-// the bundles that contain the web workers.
 self.MonacoEnvironment = {
-  getWorkerUrl: function (moduleId: string, label: string) {
-    // console.log(label)
-    // if (label === 'json') {
-    //   return new jsonWorker()
-    // }
-    // if (label === 'css') {
-    //   return new cssWorker()
-    // }
-    // if (label === 'html') {
-    //   return new htmlWorker()
-    // }
-    // if (label === 'typescript' || label === 'javascript') {
-    //   return new tsWorker()
-    // }
-    return new editorWorker()
+  getWorker: async function (workerId, label) {
+    let worker
+
+    switch (label) {
+      case 'json':
+        worker = await import('monaco-editor/esm/vs/language/json/json.worker?worker');
+        break;
+      case 'css':
+      case 'scss':
+      case 'less':
+        worker = await import('monaco-editor/esm/vs/language/css/css.worker?worker');
+        break;
+      case 'html':
+      case 'handlebars':
+      case 'razor':
+        worker = await import('monaco-editor/esm/vs/language/html/html.worker?worker');
+        break;
+      case 'typescript':
+      case 'javascript':
+        worker = await import('monaco-editor/esm/vs/language/typescript/ts.worker?worker');
+        break;
+      default:
+        worker = await import('monaco-editor/esm/vs/editor/editor.worker?worker');
+    }
+
+    return new worker.default()
   }
+
 }
 
 // https://github.com/SadeghPM/sql-vscode-snipptes/blob/master/snippets/snippets.json

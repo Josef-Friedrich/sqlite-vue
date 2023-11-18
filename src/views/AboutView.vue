@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const v = VERSION
+// const v = VERSION
 </script>
 
 <template>
@@ -8,6 +8,6 @@ const v = VERSION
 
     <img src="../assets/logo.png">
 
-    {{ v }}
+    <!-- {{ v }} -->
   </div>
 </template>
