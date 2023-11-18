@@ -1,11 +1,9 @@
 <script setup lang="ts">
-// const v = VERSION
-
-import { version as vueVersion, onMounted, ref } from 'vue'
+import { onMounted, ref, version as vueVersion } from 'vue'
+import { query } from '../sql.js'
 
 const monacoVersion = __VERSION_MONACO__
-
-import { query } from '../sql.js'
+const sqljsVersion = __VERSION_SQLJS__
 
 let sqliteVersion = ref<string>()
 onMounted(() => {
@@ -21,18 +19,18 @@ onMounted(() => {
 
     <ul>
       <li v-if="sqliteVersion != null">
-        <a href="https://www.sqlite.org">SQLite {{ sqliteVersion }}</a>
+        <a href="https://www.sqlite.org">SQLite: {{ sqliteVersion }}</a>
       </li>
 
-      <li><a href="https://sql.js.org">sql.js</a></li>
+      <li><a href="https://sql.js.org">sql.js: {{ sqljsVersion }}</a></li>
 
       <li>
-        <a href="https://vuejs.org">vue {{ vueVersion }}</a>
+        <a href="https://vuejs.org">vue: {{ vueVersion }}</a>
       </li>
 
       <li>
         <a href="https://microsoft.github.io/monaco-editor/"
-          >monaco-editor {{ monacoVersion }}</a
+          >monaco-editor: {{ monacoVersion }}</a
         >
       </li>
     </ul>
