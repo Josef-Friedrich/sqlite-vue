@@ -13,7 +13,7 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
-    "parser": "npx peggy --format es ./src/sql-parser/sql.pegjs"
+    "parser": "npx peggy --format es ./src/sql-parser/pegjs/florajs.pegjs && npx peggy --format es ./src/sql-parser/pegjs/joe-re.pegjs && npx peggy --format es ./src/sql-parser/pegjs/parboiled-experiments.pegjs"
   },
   "type": "module",
   "dependencies": {

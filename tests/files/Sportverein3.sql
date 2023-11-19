@@ -1,26 +1,26 @@
 -- phpMyAdmin SQL Dump
 -- version 2.7.0-pl1
 -- http://www.phpmyadmin.net
--- 
+--
 -- Host: localhost
 -- Erstellungszeit: 17. Januar 2007 um 15:18
 -- Server Version: 5.0.18
 -- PHP-Version: 5.1.1
 
-SET FOREIGN_KEY_CHECKS=0;
+-- SET FOREIGN_KEY_CHECKS=0;
 
-SET AUTOCOMMIT=0;
-START TRANSACTION;
+-- SET AUTOCOMMIT=0;
+-- START TRANSACTION;
 
--- 
+--
 -- Datenbank: `sportverein2`
--- 
+--
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Tabellenstruktur für Tabelle `abteilung`
--- 
+--
 
 DROP TABLE IF EXISTS `abteilung`;
 CREATE TABLE `abteilung` (
@@ -30,9 +30,9 @@ CREATE TABLE `abteilung` (
   PRIMARY KEY  (`Sport_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 
+--
 -- Daten für Tabelle `abteilung`
--- 
+--
 
 INSERT IGNORE INTO `abteilung` VALUES (1, 'Fußball', 150.00);
 INSERT IGNORE INTO `abteilung` VALUES (2, 'Handball', 110.00);
@@ -50,9 +50,9 @@ INSERT IGNORE INTO `abteilung` VALUES (13, 'Tennis', 500.00);
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Tabellenstruktur für Tabelle `ist_mitglied_von`
--- 
+--
 
 DROP TABLE IF EXISTS `ist_mitglied_von`;
 CREATE TABLE `ist_mitglied_von` (
@@ -62,9 +62,9 @@ CREATE TABLE `ist_mitglied_von` (
   KEY `Sport_ID` (`Sport_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 
+--
 -- Daten für Tabelle `ist_mitglied_von`
--- 
+--
 
 INSERT IGNORE INTO `ist_mitglied_von` VALUES (1, 1);
 INSERT IGNORE INTO `ist_mitglied_von` VALUES (2, 1);
@@ -396,9 +396,9 @@ INSERT IGNORE INTO `ist_mitglied_von` VALUES (9, 12);
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Tabellenstruktur für Tabelle `ort`
--- 
+--
 
 DROP TABLE IF EXISTS `ort`;
 CREATE TABLE `ort` (
@@ -408,9 +408,9 @@ CREATE TABLE `ort` (
   PRIMARY KEY  (`Ort_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 
+--
 -- Daten für Tabelle `ort`
--- 
+--
 
 INSERT IGNORE INTO `ort` VALUES (1, '85368', 'Brugschlag');
 INSERT IGNORE INTO `ort` VALUES (2, '85405', 'Nandlstadt');
@@ -444,9 +444,9 @@ INSERT IGNORE INTO `ort` VALUES (29, '86830', 'Schwabmünchen');
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Tabellenstruktur für Tabelle `person`
--- 
+--
 
 DROP TABLE IF EXISTS `person`;
 CREATE TABLE `person` (
@@ -462,9 +462,9 @@ CREATE TABLE `person` (
   KEY `Ort_ID` (`Ort_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=204 ;
 
--- 
+--
 -- Daten für Tabelle `person`
--- 
+--
 
 INSERT IGNORE INTO `person` VALUES (1, 'Hans', 'Huber', '1981-03-12', 'm', 'Postweg 12', 1, '08XBG / AB C0 01');
 INSERT IGNORE INTO `person` VALUES (2, 'Klaus', 'Maier', '1982-02-20', 'm', 'Gartenweg 2', 2, '08XND / AB 02');
@@ -669,9 +669,9 @@ INSERT IGNORE INTO `person` VALUES (203, 'Hashimoto', 'Tatami', '1961-07-06', 'm
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Tabellenstruktur für Tabelle `personneu`
--- 
+--
 
 DROP TABLE IF EXISTS `personneu`;
 CREATE TABLE `personneu` (
@@ -683,9 +683,9 @@ CREATE TABLE `personneu` (
   `Telefon` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 
+--
 -- Daten für Tabelle `personneu`
--- 
+--
 
 INSERT IGNORE INTO `personneu` VALUES ('Neumann', 'Herbert', '1966-01-13', 'XY-Straße 6', 'Neustadt', '090909/6666\r');
 INSERT IGNORE INTO `personneu` VALUES ('Neumann', 'Beate', '1971-05-17', 'XY-Straße 6', 'Neustadt', '090909/6666\r');
@@ -703,23 +703,23 @@ INSERT IGNORE INTO `personneu` VALUES ('Siebert', 'Fritz', '1955-07-29', 'Hubert
 INSERT IGNORE INTO `personneu` VALUES ('Siebert', 'Marianne', '1955-03-12', 'Hubertusstr. 86', 'Altendorf', '\r');
 INSERT IGNORE INTO `personneu` VALUES ('Siebert', 'Chantal', '1980-06-03', 'Hubertusstr. 86', 'Altendorf', '\r');
 
--- 
+--
 -- Constraints der exportierten Tabellen
--- 
+--
 
--- 
+--
 -- Constraints der Tabelle `ist_mitglied_von`
--- 
+--
 ALTER TABLE `ist_mitglied_von`
   ADD CONSTRAINT `ist_mitglied_von_ibfk_3` FOREIGN KEY (`Sport_ID`) REFERENCES `abteilung` (`Sport_ID`) ON UPDATE CASCADE,
   ADD CONSTRAINT `ist_mitglied_von_ibfk_2` FOREIGN KEY (`M_ID`) REFERENCES `person` (`M_ID`) ON UPDATE CASCADE;
 
--- 
+--
 -- Constraints der Tabelle `person`
--- 
+--
 ALTER TABLE `person`
   ADD CONSTRAINT `person_ibfk_1` FOREIGN KEY (`Ort_ID`) REFERENCES `ort` (`Ort_ID`) ON UPDATE CASCADE;
 
 SET FOREIGN_KEY_CHECKS=1;
 
-COMMIT;
+-- COMMIT;

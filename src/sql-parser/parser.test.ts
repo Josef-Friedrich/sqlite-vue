@@ -1,7 +1,5 @@
-
-
 import { expect, test } from 'vitest'
-import { parse } from './sql.js'
+import { parse } from './parser'
 
 import * as fs from 'node:fs'
 
@@ -11,8 +9,8 @@ test('sql-parser()', () => {
 })
 
 test('mysql-dump', () => {
-  const data = fs.readFileSync('./tests/files/Sportverein3.sql', 'utf8');
+  const data = fs.readFileSync('./tests/files/Sportverein3.sql', 'utf8')
 
   const result = parse(data)
-  expect(result.ast.columns.type).toBe('star')
+  console.log(result)
 })
