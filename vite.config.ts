@@ -34,6 +34,7 @@ export default defineConfig({
   },
   define: {
     __VERSION_MONACO__: getStringifiedVersion('monaco-editor'),
-    __VERSION_SQLJS__:getStringifiedVersion('sql.js')
-  }
+    __VERSION_SQLJS__: getStringifiedVersion('sql.js')
+  },
+  base: '/SQLama/'
 })
